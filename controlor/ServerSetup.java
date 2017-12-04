@@ -9,10 +9,16 @@ import tools.ManageServerConClientThread;
 import tools.ServerConClientThread;
 
 import java.net.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.io.*;
 import java.util.*;
 
 import org.json.simple.JSONObject;
+
+import db.SQLHelper;
 
 public class ServerSetup {
 
@@ -23,6 +29,9 @@ public class ServerSetup {
 			// port 9999 monitoring 
 			System.out.println("I am a server, I'm monitoring 9999 port....");
 			ServerSocket ss = new ServerSocket(9999);
+			
+			SQLHelper DB = new SQLHelper();
+			List<List<String>> userData = DB.getUserData();
 
 			while (true) {
 				Socket s = ss.accept();

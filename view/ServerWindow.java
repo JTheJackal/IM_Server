@@ -34,7 +34,7 @@ public class ServerWindow extends JFrame implements ActionListener {
 	public ServerWindow() {
 		
 		jp1 = new JPanel();
-		jb1 = new JButton("Setup server");
+		jb1 = new JButton("Start server");
 		jb1.addActionListener(this);
 		jb2 = new JButton("Close server");
 		jb2.addActionListener(this);
