@@ -32,7 +32,6 @@ public class ServerConClientThread extends Thread {
 			m.put("mesType", MessageType.message_ret_onLineFriend);
 			
 			
-
 			String onLineUserId = it.next().toString();
 			try {
 				ObjectOutputStream oos = new ObjectOutputStream(
