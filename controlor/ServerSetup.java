@@ -31,7 +31,7 @@ public class ServerSetup {
 			ServerSocket ss = new ServerSocket(9999);
 			
 			SQLHelper DB = new SQLHelper();
-			List<List<String>> userData = DB.getUserData();
+			//List<List<String>> userData = DB.getUserData();
 
 			while (true) {
 				Socket s = ss.accept();
@@ -43,8 +43,11 @@ public class ServerSetup {
 				JSONObject m = new JSONObject();
 				ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 				
+				DB.checkPass(u.get("userId").toString(), u.get("passwd").toString());
+				
 				//if (u.getPasswd().equals("123456")) {
-				if (u.get("passwd").toString().equals("123456")) {
+				//if (u.get("passwd").toString().equals("123456")) {
+				if (DB.checkPass(u.get("userId").toString(), u.get("passwd").toString())) {
 					//m.setMesType("1");
 					m.put("mesType", MessageType.message_succeed);
 					oos.writeObject(m);

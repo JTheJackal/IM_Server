@@ -46,4 +46,38 @@ public class SQLHelper {
         }
 		return Data;
     }
+   
+   public boolean checkPass(String userID, String givenPass) throws SQLException {
+	   System.out.println("Connecting database...");
+	   
+	   ResultSet resultSet = null;
+	   try {
+			Connection connection = DriverManager.getConnection(url, username, password);
+		    System.out.println("Database connected!");
+		    
+		    String query = "SELECT * FROM `chatDB`.`Users` WHERE userID = '" + userID + "';";
+		    System.out.println("Running query: " + query);
+		    
+		    resultSet = connection.prepareStatement(query).executeQuery();
+		    
+		} catch (SQLException e) {
+		    throw new IllegalStateException("Cannot connect the database!", e);
+		}
+	   
+	   if (!resultSet.next() ) {
+		    System.out.println("User does not exist.");
+		} 
+	   else {
+           String dbPass = resultSet.getString("password");
+           if(givenPass.equals(dbPass)) {
+        	   return true;
+           }
+           else {
+        	   System.out.println("Password incorrect.");
+           }
+	   }
+	   
+	   
+	   return false;
+   }
 }
