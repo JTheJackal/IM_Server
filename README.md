@@ -29,6 +29,8 @@ Once MySQL Workbench is installed create a new connection by clicking on the "+"
 Once the connection is set up, click on it to run the server.
 Paste the following query into the query window to initialize the database.
 
+============================================================
+
 CREATE DATABASE chatDB;
 CREATE TABLE IF NOT EXISTS `chatDB`.`Users` (
   `userID` VARCHAR(40) NOT NULL,
@@ -42,4 +44,6 @@ INSERT INTO `Users` (`userID`,`password`) VALUES
 ('user2','123456'),
 ('user3','123456');
 
-Execute the query by clickong the lightning bolt. 
+============================================================
+
+Execute the query by clicking the lightning bolt. 
