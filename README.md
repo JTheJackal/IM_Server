@@ -8,7 +8,7 @@ Finish
 
 Expand IM_Server project in Eclipse
 Expand lib package
-right click json_simple-1.1.1.jar
+right click json_simple-1.1.1.jar and mysql-connector-java-5.1.45-bin.jar
 build path -> Add to build path
 Expand view package
 Run ServerWindow.java as java application
