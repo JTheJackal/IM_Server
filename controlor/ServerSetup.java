@@ -49,9 +49,14 @@ public class ServerSetup {
 				if(u.get("messType").toString().equals(MessageType.message_createAcc.toString())) {
 					System.out.println("Creating new account");
 					
-					DB.newUser(u.get("userId").toString(), u.get("passwd").toString());
+					boolean status = DB.newUser(u.get("userId").toString(), u.get("passwd").toString());
 					
-					m.put("mesType", MessageType.message_login_fail);
+					if (status) {
+						m.put("mesType", MessageType.message_succeed);
+					}
+					else {
+						m.put("mesType", MessageType.message_login_fail);
+					}
 					oos.writeObject(m);
 					s.close();
 				}

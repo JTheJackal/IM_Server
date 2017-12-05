@@ -82,18 +82,25 @@ public class SQLHelper {
 	   return false;
    }
    
-   public void newUser(String userID, String givenPass) throws SQLException {
-	   Connection connection = DriverManager.getConnection(url, username, password);
-	    System.out.println("Database connected!");
-	    
-	    String query = 
-	    		"INSERT INTO `Users` (`userID`,`password`) VALUES "+
-	    		"('"+ userID +"','" + givenPass + "');";
-	    		
-	    System.out.println("Running query: " + query);
-	    
-	    Statement statement = connection.createStatement();
-	    statement.executeUpdate(query);
+   public boolean newUser(String userID, String givenPass) throws SQLException {
+	   try {
+		   Connection connection = DriverManager.getConnection(url, username, password);
+		    System.out.println("Database connected!");
+		    
+		    String query = 
+		    		"INSERT INTO `Users` (`userID`,`password`) VALUES "+
+		    		"('"+ userID +"','" + givenPass + "');";
+		    		
+		    System.out.println("Running query: " + query);
+		    
+		    Statement statement = connection.createStatement();
+		    statement.executeUpdate(query);
+		    return true;
+	   } catch (SQLException e) {
+		  e.printStackTrace();
+		   	return false;
+		}
+
    }
    
    
