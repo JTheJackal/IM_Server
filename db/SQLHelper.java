@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,4 +81,20 @@ public class SQLHelper {
 	   
 	   return false;
    }
+   
+   public void newUser(String userID, String givenPass) throws SQLException {
+	   Connection connection = DriverManager.getConnection(url, username, password);
+	    System.out.println("Database connected!");
+	    
+	    String query = 
+	    		"INSERT INTO `Users` (`userID`,`password`) VALUES "+
+	    		"('"+ userID +"','" + givenPass + "');";
+	    		
+	    System.out.println("Running query: " + query);
+	    
+	    Statement statement = connection.createStatement();
+	    statement.executeUpdate(query);
+   }
+   
+   
 }

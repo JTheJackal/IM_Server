@@ -37,40 +37,54 @@ public class ServerSetup {
 				Socket s = ss.accept();
 
 				ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-				JSONObject u = (JSONObject) ois.readObject();
-				//User u = (User) ois.readObject();
-				//Message m = new Message();
 				JSONObject m = new JSONObject();
 				ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+				JSONObject u = (JSONObject) ois.readObject();
 				
-				DB.checkPass(u.get("userId").toString(), u.get("passwd").toString());
 				
-				//if (u.getPasswd().equals("123456")) {
-				//if (u.get("passwd").toString().equals("123456")) {
-				if (DB.checkPass(u.get("userId").toString(), u.get("passwd").toString())) {
-					//m.setMesType("1");
-					m.put("mesType", MessageType.message_succeed);
-					oos.writeObject(m);
-
-					ServerConClientThread scct = new ServerConClientThread(s);
+				System.out.println(MessageType.message_createAcc);
+				//User u = (User) ois.readObject();
+				//Message m = new Message();
+				
+				if(u.get("messType").toString().equals(MessageType.message_createAcc.toString())) {
+					System.out.println("Creating new account");
 					
-					/*
-					ManageServerConClientThread.addClientThread(u.getUserId(), scct);
-					*/
+					DB.newUser(u.get("userId").toString(), u.get("passwd").toString());
 					
-					ManageServerConClientThread.addClientThread(u.get("userId").toString(), scct);
-
-
-					scct.start();
-
-					//scct.notifyOther(u.getUserId());
-					scct.notifyOther((String) u.get("userId"));
-				} else {
-					//m.setMesType("2");
 					m.put("mesType", MessageType.message_login_fail);
 					oos.writeObject(m);
 					s.close();
-
+				}
+				else if(u.get("messType").toString().equals(MessageType.message_login)) {
+				
+					DB.checkPass(u.get("userId").toString(), u.get("passwd").toString());
+					
+					//if (u.getPasswd().equals("123456")) {
+					//if (u.get("passwd").toString().equals("123456")) {
+					if (DB.checkPass(u.get("userId").toString(), u.get("passwd").toString())) {
+						//m.setMesType("1");
+						m.put("mesType", MessageType.message_succeed);
+						oos.writeObject(m);
+	
+						ServerConClientThread scct = new ServerConClientThread(s);
+						
+						/*
+						ManageServerConClientThread.addClientThread(u.getUserId(), scct);
+						*/
+						
+						ManageServerConClientThread.addClientThread(u.get("userId").toString(), scct);
+	
+	
+						scct.start();
+	
+						//scct.notifyOther(u.getUserId());
+						scct.notifyOther((String) u.get("userId"));
+					} else {
+						//m.setMesType("2");
+						m.put("mesType", MessageType.message_login_fail);
+						oos.writeObject(m);
+						s.close();
+					}
 				}
 
 			}
