@@ -91,6 +91,38 @@ public class ServerSetup {
 						s.close();
 					}
 				}
+				else if(u.get("messType").toString().equals(MessageType.message_addFriend)) {
+					System.out.println("Adding New Friend");
+					System.out.println(u.get("userId").toString());
+					System.out.println(u.get("friendId").toString());
+					boolean status = DB.addFriend(u.get("userId").toString(), u.get("friendId").toString());
+					
+					if (status) {
+						m.put("mesType", MessageType.message_createAccSuccess);
+					}
+					else {
+						m.put("mesType", MessageType.message_createAccFail);
+					}
+					oos.writeObject(m);
+					s.close();
+				}
+				else if(u.get("messType").toString().equals(MessageType.message_getFriends)) {
+					
+					
+					List<List<String>> Friends = DB.getFriend(u.get("userId").toString());
+					
+					m.put("mesType", MessageType.message_sendFriends);
+					
+					System.out.println(u.get("userId").toString() + " has the following friends:");
+					for(int i = 0; i < Friends.size(); i++) {
+						m.put("friend"+i, Friends.get(i).get(1));
+						System.out.println(Friends.get(i).get(1));
+					}
+					
+					oos.writeObject(m);
+					s.close();
+					
+				}
 
 			}
 

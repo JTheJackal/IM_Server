@@ -103,5 +103,59 @@ public class SQLHelper {
 
    }
    
+   public boolean addFriend(String userID, String friendID) throws SQLException {
+	   try {
+		   Connection connection = DriverManager.getConnection(url, username, password);
+		    System.out.println("Database connected!");
+		    
+		    String query = 
+		    		"INSERT INTO `Friends` (`userID`,`friendID`) VALUES "+
+		    		"('"+ userID +"','" + friendID + "');";
+		    		
+		    System.out.println("Running query: " + query);
+		    
+		    Statement statement = connection.createStatement();
+		    statement.executeUpdate(query);
+		    return true;
+	   } catch (SQLException e) {
+		  e.printStackTrace();
+		   	return false;
+		}
+   }
+   
+   public List<List<String>> getFriend(String userID) throws SQLException {
+	   List<List<String>>Data = new ArrayList<List<String>>();
+	   try {
+		   Connection connection = DriverManager.getConnection(url, username, password);
+		    System.out.println("Database connected!");
+		    
+		    ResultSet resultSet = null;
+		    
+		    String query = "SELECT * FROM `chatDB`.`Friends` WHERE userID = '" + userID + "';";
+		    System.out.println("Running query: " + query);
+		    
+		    resultSet = connection.prepareStatement(query).executeQuery();
+		    
+		    
+			int i = 0;
+		    while (resultSet.next()) {
+	            String user = resultSet.getString("userID");
+	            String friend = resultSet.getString("friendID");
+
+	            i++;
+	            
+	            Data.add(Arrays.asList(user,friend));
+	            
+	            System.out.println("User: " + user);
+	            System.out.println("Friend: " + friend);
+
+	        }
+		    
+	   } catch (SQLException e) {
+		  e.printStackTrace();
+		}
+	   
+	return Data;
+   }
    
 }
