@@ -68,7 +68,7 @@ public class ServerSetup {
 					//if (u.get("passwd").toString().equals("123456")) {
 					if (DB.checkPass(u.get("userId").toString(), u.get("passwd").toString())) {
 						//m.setMesType("1");
-						m.put("mesType", MessageType.message_succeed);
+						m.put("messType", MessageType.message_succeed);
 						oos.writeObject(m);
 	
 						ServerConClientThread scct = new ServerConClientThread(s);
@@ -86,7 +86,7 @@ public class ServerSetup {
 						scct.notifyOther((String) u.get("userId"));
 					} else {
 						//m.setMesType("2");
-						m.put("mesType", MessageType.message_login_fail);
+						m.put("messType", MessageType.message_login_fail);
 						oos.writeObject(m);
 						s.close();
 					}
@@ -98,10 +98,10 @@ public class ServerSetup {
 					boolean status = DB.addFriend(u.get("userId").toString(), u.get("friendId").toString());
 					
 					if (status) {
-						m.put("mesType", MessageType.message_createAccSuccess);
+						m.put("messType", MessageType.message_createAccSuccess);
 					}
 					else {
-						m.put("mesType", MessageType.message_createAccFail);
+						m.put("messType", MessageType.message_createAccFail);
 					}
 					oos.writeObject(m);
 					s.close();
@@ -111,7 +111,7 @@ public class ServerSetup {
 					
 					List<List<String>> Friends = DB.getFriend(u.get("userId").toString());
 					
-					m.put("mesType", MessageType.message_sendFriends);
+					m.put("messType", MessageType.message_sendFriends);
 					
 					System.out.println(u.get("userId").toString() + " has the following friends:");
 					for(int i = 0; i < Friends.size(); i++) {
