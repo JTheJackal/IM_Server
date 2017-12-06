@@ -10,4 +10,6 @@ public interface MessageType {
 	String message_ret_onLineFriend="5";
 	String message_createAcc = "6";
 	String message_login = "7";
+	String message_createAccSuccess = "8";
+	String message_createAccFail = "9";
 }

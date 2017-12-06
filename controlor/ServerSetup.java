@@ -52,10 +52,10 @@ public class ServerSetup {
 					boolean status = DB.newUser(u.get("userId").toString(), u.get("passwd").toString());
 					
 					if (status) {
-						m.put("mesType", MessageType.message_succeed);
+						m.put("mesType", MessageType.message_createAccSuccess);
 					}
 					else {
-						m.put("mesType", MessageType.message_login_fail);
+						m.put("mesType", MessageType.message_createAccFail);
 					}
 					oos.writeObject(m);
 					s.close();
